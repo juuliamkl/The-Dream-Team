@@ -19,6 +19,7 @@ import { sortFunc } from "./sorting";
 
 /* Styling */
 import "./sort.page.scss";
+import { SortMethod } from "../../types/SortMethods";
 
 
 const Sort = () => {
@@ -28,6 +29,9 @@ const Sort = () => {
 
     const [ students, setStudents ] = useState<Array<StudentWithLocation>>([]);
     const [ isDragging, setDragging ] = useState<boolean>(false);
+
+    const [ sortType, setSortType ] = useState<SortMethod>("default");
+    const [ isAscending, setAscending ] = useState<boolean>(true);
 
     useEffect(() => {
         if (token === undefined) return;
@@ -65,7 +69,7 @@ const Sort = () => {
                                     key={idx}
                                     id={idx}
                                     name={col}
-                                    sorter={sortFunc("default")}
+                                    sorter={sortFunc(sortType, !isAscending)}
                                     isDragging={isDragging}
                                     students={
                                         students
