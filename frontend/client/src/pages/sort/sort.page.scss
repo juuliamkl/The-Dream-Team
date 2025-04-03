@@ -16,8 +16,12 @@
         display: flex;
         align-items: center;
 
-        &>.build-team {
+        .drop {
             margin-left: auto;
+        }
+
+        &>.build-team {
+            margin-left: 10px;
             padding: 1em;
             border-radius: 0.5em;
             border: 1px solid var(--blue);
@@ -37,5 +41,20 @@
         align-items: start;
         justify-content: space-between;
         width: auto;
+    }
+}
+
+.method-dropdown {
+    border: solid 1px rgb(0, 0, 0);
+    border-radius: 1em;
+    background-color: rgba(130, 130, 130, 0.396);
+
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    &>.method {
+        width: 100%;
     }
 }

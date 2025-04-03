@@ -20,6 +20,8 @@ import { sortFunc } from "./sorting";
 /* Styling */
 import "./sort.page.scss";
 import { SortMethod } from "../../types/SortMethods";
+import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
+import { error } from "console";
 
 
 const Sort = () => {
@@ -57,6 +59,42 @@ const Sort = () => {
         <div className="container">
             <div className="head">
                 <h1>{ currentProject?.name }</h1>
+                <Popover placement="bottom">
+                        <PopoverTrigger>
+                            <button className="drop">
+                                Select sort method
+                            </button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <div className="method-dropdown">
+                                <button className="method" onClick={() => setSortType("default")}>
+                                    None
+                                </button> 
+                                <button className="method" onClick={() => {
+                                    setSortType("name");
+                                    setAscending(true);
+                                }}>
+                                    Name ascending
+                                </button>
+                                <button className="method" onClick={() => {
+                                    setSortType("name");
+                                    setAscending(false);
+                                }}>
+                                    Name descending
+                                </button>          
+                                <button className="method" onClick={() => {
+                                    throw new Error ("Score ascending not implemented")
+                                }}>
+                                    Score ascending
+                                </button>
+                                <button className="method" onClick={() => {
+                                    throw new Error ("Score descending not implemented")
+                                }}>
+                                    Score descending
+                                </button>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
                 <button className="build-team" onClick={handleTeamBuild}>Build team</button>
             </div>
             <div className="columns">
