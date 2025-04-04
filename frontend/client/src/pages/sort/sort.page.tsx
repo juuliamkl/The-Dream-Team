@@ -22,6 +22,7 @@ import "./sort.page.scss";
 import { SortMethod } from "../../types/SortMethods";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { error } from "console";
+import dropdownIcon from "./dropdown-icon.svg";
 
 
 const Sort = () => {
@@ -63,6 +64,7 @@ const Sort = () => {
                         <PopoverTrigger>
                             <button className="drop">
                                 Select sort method
+                                <img className="icon" src={dropdownIcon}/>
                             </button>
                         </PopoverTrigger>
                         <PopoverContent>

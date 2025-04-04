@@ -16,15 +16,28 @@
 
     &>.project-select {
         margin: auto;
-        width: 30%;
+        width: 40%;
         
         .drop {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 1.25em;
             width: 100%;
             display: flex;
             gap: 3px;
+            border: solid 1px var(--moonstone);
+            border-radius: 0.3em;
+            background-color: var(--snow);
+            cursor: pointer;
+            min-height: 3vw;
+            padding: 10px;
+            &:hover {
+                border: solid 2px var(--blue);
+            }
 
             .icon {
                 margin-left: auto;
+                width: 25px;
+                height: 25px;
             }
         }
 
@@ -33,9 +46,9 @@
 }
 
 .dropdown {
-    border: solid 1px rgb(0, 0, 0);
+    border: solid 1px var(--moonstone);
     border-radius: 1em;
-    background-color: rgba(130, 130, 130, 0.396);
+    background-color: var(--snow);
 
     min-width: 15vw;
 

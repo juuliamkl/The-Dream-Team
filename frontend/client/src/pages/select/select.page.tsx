@@ -12,6 +12,7 @@ import { getProjects } from "../../services/project/project.service";
 import studentLabeler from "./student-marker";
 
 /* Styling */
+import dropdownIcon from "./dropdown-icon.svg";
 import "./select.page.scss";
 
 const Select = () => {
@@ -37,22 +38,22 @@ const Select = () => {
                     <p>Please log in to use the App!</p>
                 :
                     <Popover placement="bottom">
-                    <PopoverTrigger>
-                        <button className="drop">
-                            <span>Select project</span>
-                            <span className="icon">V</span>
-                        </button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <div className="dropdown">
-                            {
-                                projects.map((proj, index) => (
-                                    <ProjectSelect key={index} project={proj}/>
-                                ))
-                            }
-                        </div>
-                    </PopoverContent>
-                </Popover>
+                        <PopoverTrigger>
+                            <button className="drop">
+                                <span>Select project</span>
+                                <img className="icon" src={dropdownIcon}/>
+                            </button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <div className="dropdown">
+                                {
+                                    projects.map((proj, index) => (
+                                        <ProjectSelect key={index} project={proj}/>
+                                    ))
+                                }
+                            </div>
+                        </PopoverContent>
+                    </Popover>
             }
             </div>
         </div>

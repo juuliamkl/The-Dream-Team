@@ -18,9 +18,28 @@
 
         .drop {
             margin-left: auto;
+            font-size: 1em;
+            width: 15%;
+            display: flex;
+            gap: 3px;
+            border: solid 1px var(--moonstone);
+            border-radius: 0.3em;
+            background-color: var(--snow);
+            cursor: pointer;
+            min-height: 1vw;
+            padding: 10px;
+            &:hover {
+                border: solid 2px var(--blue);
+            }
+            .icon {
+                margin-left: auto;
+                width: 20px;
+                height: 20px;
+            }
         }
 
         &>.build-team {
+            font-size: 1em;
             margin-left: 10px;
             padding: 1em;
             border-radius: 0.5em;
@@ -45,10 +64,12 @@
 }
 
 .method-dropdown {
-    border: solid 1px rgb(0, 0, 0);
+    margin-left: auto;
+    width: 50%;
+    border: solid 1px var(--moonstone);
     border-radius: 1em;
-    background-color: rgba(130, 130, 130, 0.396);
-
+    background-color: var(--snow);
+    cursor: pointer;
     padding-left: 1em;
     padding-right: 1em;
     padding-top: 1em;
@@ -56,5 +77,16 @@
 
     &>.method {
         width: 100%;
+        border: 1px solid var(--moonstone);
+        background-color: var(--snow);
+        border-radius: 0.25em;
+        cursor: pointer;
+        text-align: left;
+        padding: 5px;
+        margin: 2px;
+        font-size: 1em;
+        &:hover {
+            border: solid 2px var(--blue);
+        }
     }
 }
