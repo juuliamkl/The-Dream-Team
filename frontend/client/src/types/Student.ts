@@ -2,24 +2,26 @@
 import { ColumnType } from "./Columns";
 import { Label } from "./Label";
 import { Project } from "./Project";
+import { Score } from "./Score";
 
 export type Student = {
-  id: number;
-  name: string;
-  homeUniversity: string;
-  attendingUniversity: string;
-  city: string;
-  cvLink: string;
-  degreeLevelType: string;
-  notes: string[];
-  socialNetworkLinks: Map<string, string>;
-  studiesDescription: string;
-  studiesField: string;
-  studiesType: string;
-  whyGoodCreator: string;
-  whyJoinDemola: string;
-  whyRole: string;
-  applications: ApplicationData[];
+  id: number,
+  name: string,
+  homeUniversity: string,
+  attendingUniversity: string,
+  city: string,
+  cvLink: string,
+  degreeLevelType: string,
+  notes: string[],
+  socialNetworkLinks: Map<string, string>,
+  studiesDescription: string,
+  studiesField: string,
+  studiesType: string,
+  whyGoodCreator: string,
+  whyJoinDemola: string,
+  whyRole: string,
+  applications: ApplicationData[],
+  score?: Score
 };
 
 export type StudentWithColumn = {

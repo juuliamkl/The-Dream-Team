@@ -5,20 +5,22 @@ import { DndContext, DragEndEvent } from '@dnd-kit/core';
 
 /* Types */
 import { StudentWithLocation } from "../../types/Student";
-import { ColumnCreation, ColumnType } from "../../types/Columns";
+import { ColumnType } from "../../types/Columns";
 
 /* Components, services & etc. */
 import SortColumn from "../../components/sort-column/sort-column.component";
-import { updateStudentsLabels } from "./label-updater";
+import { updateAllStudentLabels, updateMovedStudentsLabels } from "./label-helpers";
+import { setStudentLocationTo } from "../../services/student/location.service";
 import { useProjectContext } from "../../services/project/project.provider";
-import { addStudentsLocations } from "./students-to-columns";
+import { addInitialStudentLocations, addStudentLocationsViaML } from "./students-to-columns";
 import { useAuth } from "../../services/auth/auth.provider";
 import { getStudents } from "../../services/student/student.service";
-import { handleDragEnd } from "./drag-helpers";
+import { handleDragEnd, parseDragIDs } from "./drag-helpers";
 import { sortFunc } from "./sorting";
 
 /* Styling */
 import "./sort.page.scss";
+import { addScoreForStudents } from "./score-helpers";
 
 
 const Sort = () => {
@@ -32,21 +34,34 @@ const Sort = () => {
     useEffect(() => {
         if (token === undefined) return;
 
-        getStudents(+id!, token)
-            .then(addStudentsLocations(ColumnCreation.Initial))
-            .then(setStudents);
+        const projectId = +id!;
+        getStudents(projectId, token)
+            .then(gotStudents => addInitialStudentLocations(projectId, gotStudents))
+            .then(addScoreForStudents(projectId, token, setStudents));
     }, []);
 
     const onDragEnd = (event: DragEndEvent) => {
         setDragging(false);
-        updateStudentsLabels(currentProject!.name, event);
-        handleDragEnd(students, setStudents)(event);
+
+        const projectId = +id!;
+        const { dragging, target } = parseDragIDs(event)
+        if (!target) return;
+
+        // Update labels, student location and set the UI to match data
+        updateMovedStudentsLabels(currentProject!.name, dragging, target);
+        setStudentLocationTo(target.columnId, projectId, dragging.cardId!);
+        handleDragEnd(students, setStudents)(dragging, target);
     }
 
-    const handleTeamBuild = () => {
-        setStudents(
-            addStudentsLocations(ColumnCreation.Request)(students.map(wrapped => wrapped.student))
-        );
+    const handleTeamBuild = async () => {
+        const projectId = +id!;
+        const oldUnwrappedStudents = students.map(wrapped => wrapped.student);
+
+        const newStudents = await addStudentLocationsViaML(projectId, oldUnwrappedStudents, token!);
+        setStudents(newStudents);
+
+        updateAllStudentLabels(currentProject!.name, newStudents);
+        newStudents.forEach(wrappedStudent => setStudentLocationTo(wrappedStudent.column, projectId, wrappedStudent.student.id));
     }
 
     return (
@@ -69,7 +84,7 @@ const Sort = () => {
                                     isDragging={isDragging}
                                     students={
                                         students
-                                            .filter((wrapped) => wrapped.column != null ? +wrapped.column === idx : 0)
+                                            .filter((wrapped) => +wrapped.column === idx)
                                             .map(wrapped => { return { student: wrapped.student, row: wrapped.row }})
                                     }
                                 />

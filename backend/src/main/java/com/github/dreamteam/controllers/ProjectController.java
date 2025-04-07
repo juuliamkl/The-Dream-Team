@@ -97,7 +97,7 @@ public class ProjectController {
   @ExceptionHandler(EntityNotFoundException.class)
   @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "MongoDB didn't find any document.")
   public final void handleNotFoundExceptions(EntityNotFoundException e) {
-    LOGGER.info("=> Movie not found: {}", e.toString());
+    LOGGER.info("=> Not found: {}", e.toString());
   }
 
   @ExceptionHandler(RuntimeException.class)

@@ -4,6 +4,9 @@ import { createContext, useContext, useEffect, useMemo, useState, ReactNode } fr
 /* Types */
 import { AuthToken } from "../../types/Auth";
 
+/* Components, services & etc. */
+import { callInitML, setML_status } from "../ML/ml.service";
+
 type AuthProviderType = {
     isLoggedIn: boolean,
     token: AuthToken | undefined,
@@ -27,7 +30,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const setToken = (newToken?: AuthToken) => {
         _setToken(newToken);
-        window.location.reload();
+        if (!newToken) window.location.reload();
+
+        if (newToken) callInitML(newToken);
+        else setML_status(false);
     };
 
     useEffect(() => {

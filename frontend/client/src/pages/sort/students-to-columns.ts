@@ -1,29 +1,12 @@
 /* Types */
-import {
-  Student,
-  StudentWithColumn,
-  StudentWithLocation,
-} from "../../types/Student";
+import { Student, StudentWithColumn, StudentWithLocation } from "../../types/Student";
+import { Project } from "../../types/Project";
+import { AuthToken } from "../../types/Auth";
 
 /* Components, services & etc. */
-import {
-  checkStudentStatus,
-  getStudentStatus,
-} from "../../services/student/student.service";
-import { ColumnCreation, StudentToColMapper } from "../../types/Columns";
-
-type ColumnAdder = (
-  student: Student,
-  index?: number,
-  array?: Student[],
-) => StudentWithColumn;
-
-const columnInitializer = (student: Student): StudentWithColumn => {
-  return { student, column: checkStudentStatus(student) };
-};
-const columnRequester = (student: Student): StudentWithColumn => {
-  return { student, column: getStudentStatus(student) };
-};
+import { getStudentLocation } from "../../services/student/location.service";
+import { getTeam } from "../../services/score/score.service";
+import { ColumnType } from "../../types/Columns";
 
 const createRowAdder = () => {
   const numPerCol: Array<number> = [0, 0, 0];
@@ -34,20 +17,20 @@ const createRowAdder = () => {
   };
 };
 
-export const addStudentsLocations = (
-  usecase: ColumnCreation,
-): StudentToColMapper => {
-  const locationAdder =
-    (columnAdder: ColumnAdder) =>
-    (students: Student[]): StudentWithLocation[] =>
-      students.map(columnAdder).map(createRowAdder());
+export const addInitialStudentLocations = (projectId: Project["id"], students: Student[]): StudentWithLocation[] => {
+    return students.map(student => { return { student, column: getStudentLocation(projectId, student.id) } })
+                   .map(createRowAdder())
+}
 
-  switch (usecase) {
-    case ColumnCreation.Initial:
-      return locationAdder(columnInitializer);
-    case ColumnCreation.Request:
-      return locationAdder(columnRequester);
-    default:
-      throw new Error("Invalid column creation value!");
-  }
-};
+export const addStudentLocationsViaML = async (projectId: Project["id"], students: Student[], token: AuthToken): Promise<StudentWithLocation[]> => {
+    // TODO: Update this function after figured out getStudentStatus' func. signature
+    if (!token) throw new Error("No token in when getting project team!");
+
+    const team = await getTeam(projectId, token);
+    const addLocation = (student: Student): ColumnType => {
+        const val = team.team.filter(score => score.studentId === student.id);
+        return val.length > 0 ? ColumnType.Selected : ColumnType.Applied;
+    };
+    return students.map(student => { return { student, column: addLocation(student) } })
+                   .map(createRowAdder())
+}

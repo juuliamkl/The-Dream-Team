@@ -1,12 +1,13 @@
-import {
-  getStudents,
-  removeAllLabelsByType,
-} from "../../services/student/student.service";
+/* Types */
 import { AuthToken } from "../../types/Auth";
 import { LabelType } from "../../types/Label";
 import { Project } from "../../types/Project";
 import { Student } from "../../types/Student";
-import { markStudentAsApplied } from "../sort/label-updater";
+
+/* Components, services & etc. */
+import { removeAllLabelsByType } from "../../services/student/label.service";
+import { markStudentAsApplied } from "../sort/label-helpers";
+import { getStudents } from "../../services/student/student.service";
 
 export default (token: AuthToken) => {
   return (projects: Project[]): Project[] => {

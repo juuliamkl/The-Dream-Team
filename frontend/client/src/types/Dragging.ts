@@ -4,6 +4,11 @@ export type DragID = {
 };
 
 export type DragAreaStyle = {
-  backgroundColor?: string;
-  border?: string;
-};
+    "backgroundColor"?: string
+    "border"?: string
+}
+
+export type ParsedDragIDs = {
+    dragging: DragID,
+    target?: DragID
+}

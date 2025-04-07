@@ -32,8 +32,9 @@ public class BaseController {
   }
 
   /**
-   * Initializes the ML system by first cleaning data and then training a model. The training step
-   * only proceeds if data cleaning is successful.
+   * Initializes the ML system by first cleaning data and then training a model and making a
+   * prediction. This is a sequential process where each step depends on the success of the previous
+   * one.
    *
    * @return ResponseEntity indicating success or failure.
    */
@@ -43,12 +44,28 @@ public class BaseController {
     try {
       ResponseEntity<String> cleanResponse =
           restTemplate.postForEntity(ML_BASE_URL + "/data/clean", null, String.class);
-      if (cleanResponse.getStatusCode().is2xxSuccessful()) {
-        restTemplate.postForEntity(ML_BASE_URL + "/training/train", null, String.class);
-        return ResponseEntity.ok("Initialization complete");
-      } else {
-        return ResponseEntity.status(cleanResponse.getStatusCode()).body("Data cleaning failed");
+
+      if (!cleanResponse.getStatusCode().is2xxSuccessful()) {
+        return ResponseEntity.status(cleanResponse.getStatusCode())
+            .body("Data cleaning failed with message: " + cleanResponse.getBody());
       }
+      ResponseEntity<String> trainResponse =
+          restTemplate.postForEntity(ML_BASE_URL + "/training/train", null, String.class);
+
+      if (!trainResponse.getStatusCode().is2xxSuccessful()) {
+        return ResponseEntity.status(trainResponse.getStatusCode())
+            .body("Model training failed with message: " + trainResponse.getBody());
+      }
+
+      ResponseEntity<String> predictResponse =
+          restTemplate.postForEntity(ML_BASE_URL + "/score/predict", null, String.class);
+
+      if (!predictResponse.getStatusCode().is2xxSuccessful()) {
+        return ResponseEntity.status(predictResponse.getStatusCode())
+            .body("Prediction failed with message: " + predictResponse.getBody());
+      }
+
+      return ResponseEntity.ok("Initialization complete");
     } catch (Exception e) {
       LOGGER.error("Error during initialization", e);
       return ResponseEntity.status(500).body("Initialization failed");
