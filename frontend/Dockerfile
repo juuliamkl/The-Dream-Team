@@ -13,7 +13,7 @@ RUN npm install
 COPY client .
 
 # Set API endpoint env variable
-ENV API_ENDPOINT=https://localhost/api
+ENV VITE_API_ENDPOINT=http://localhost/api
 
 # Build the static SPA app
 RUN npm run build

@@ -5,15 +5,26 @@
 *.json
 *.joblib
 
+#Allow test file with made up data
+!data/cleaned_data_test.json
+
 #Data
 data/example.txt
+!data/test*
+!/data/test_data/
+!data/test_data/*
 
 #ML Models
 
 
-#Pythin cache files
+#Python cache files
 __pycache__/
 __pycache__/*
+
+#Pytest
+.coverage
+htmlcov/
+.pytest_cache/
 
 #VS code
 .vscode/

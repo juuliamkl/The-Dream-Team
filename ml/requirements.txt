@@ -1,10 +1,11 @@
 fastapi
-Flask
-gunicorn
+httpx
 joblib
 numpy
 packaging
 pandas
+pytest
+pytest-mock
 scikit-learn
 scipy
 uvicorn

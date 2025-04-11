@@ -1,11 +1,21 @@
-// package com.github.dreamteam;
+/** The main package for the TestDreamteam application. */
+package com.github.dreamteam;
 
-// import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringApplication;
 
-// public class TestDreamteamApplication {
+/**
+ * The main class for the TestDreamteam application. It serves as the entry point for the Spring
+ * Boot application.
+ */
+public class TestDreamteamApplication {
 
-// 	public static void main(String[] args) {
-// 		SpringApplication.from(DreamteamApplication::main).with(TestcontainersConfiguration.class).run(args);
-// 	}
-
-// }
+  /**
+   * The main method that starts the Spring Boot application.
+   *
+   * @param args command-line arguments
+   */
+  public static void main(String[] args) {
+    SpringApplication app = new SpringApplication(TestDreamteamApplication.class);
+    app.run(args);
+  }
+}

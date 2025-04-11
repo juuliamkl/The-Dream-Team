@@ -9,7 +9,7 @@ import { DragID } from "../../types/Dragging";
 import { Student } from "../../types/Student";
 
 /* Components, services & etc. */
-import { getStudentLabels } from "../../services/student/student.service";
+import { getStudentLabels } from "../../services/student/label.service";
 import LabelComponent from "../label/label.component";
 import Score from "../score/score.component";
 
@@ -49,7 +49,7 @@ const StudentCard = ({ student, columnId }: StudentCardProps) => {
             <span>
                 { student.name }
             </span>
-            <Score studentID={student.id}/>
+            <Score score={student.score}/>
         </CardHeader>
         <Divider />
         <CardBody className="card-body">

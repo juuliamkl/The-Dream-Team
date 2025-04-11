@@ -1,25 +1,21 @@
-/* Lib imports */
-// import { Divider } from "@heroui/divider"
-
 /* Types */
-import { Student } from "../../types/Student"
+import { Score as ScoreType} from "../../types/Score";
 
 /* Styling */
 import "./score.component.scss";
 
 type ScoreProps = {
-    studentID: Student["id"]
+    score?: ScoreType
 }
 
-const Score = ({studentID}: ScoreProps) => {
-    // TODO: get score
-    studentID += 1;
-    
+const Score = ({ score }: ScoreProps) => {
     return (
+        score !== undefined ?
         <div className="score-label">
-            <span className="score">{ studentID }</span>
-            <span className="team">{ studentID < 3 ? 0 : 1}</span>
+            <span className="score">{ score.score }</span>
+            <span className="team">{ score.motivation }</span>
         </div>
+        : <span>Loading Score</span>
     )
 }
 

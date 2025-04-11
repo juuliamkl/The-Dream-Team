@@ -4,7 +4,8 @@ from sklearn.preprocessing import MultiLabelBinarizer, LabelEncoder
 from utils import storage
 from io import StringIO
 
-def clean_data(load_name="rawData", save_name="cleaned_data"):
+# rawData
+def clean_data(load_name="2025-03-31", save_name="cleaned_data"):
     """
     Cleans the raw dataset and either saves it as JSON or returns it as a dictionary.
 
@@ -96,7 +97,7 @@ def clean_data(load_name="rawData", save_name="cleaned_data"):
     save2 = f"{save_name}_encoded"
     storage.save_json(cleaned_data, save2)
 
-    return cleaned_data  # Return cleaned data as list of Python dictionarys
+    return cleaned_data  # Return cleaned data as list of Python dictionaries
 
 def one_hot_encode_v2(fdf):
     # One-Hot Encode 'themes' with a prefix
@@ -143,5 +144,7 @@ def alternative_encode(final_merge_df):
         encoders[column] = le
 
     return final_merge_df, encoders
+
+
 
 #clean_data_v2()

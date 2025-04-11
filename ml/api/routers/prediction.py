@@ -2,23 +2,10 @@ from fastapi import APIRouter, BackgroundTasks, Query
 from fastapi.responses import JSONResponse
 from models import get_model
 from utils import storage
+from utils.api_utils import validate_model
 from typing import Optional
 
 router = APIRouter()
-
-
-def validate_model(model_type:str, model_name:str) -> bool:
-    """
-    Validates that the model_name matches the expected model_type.
-
-    Args:
-        model_type (str): The type of the model (e.g., "randomforest").
-        model_name (str): The name of the saved model (e.g., "randomforest_v1").
-
-    Returns:
-        bool: True if valid, False otherwise.
-    """
-    return model_name.startswith(f"{model_type}")
 
 #Should Work
 @router.post("/predict")
@@ -58,7 +45,11 @@ def start_prediction(
         #Generate and save scores
         model = get_model(modelType)
         print("Model received")
-        model.predict(data, modelName, saveFile, cleaning)
+        scores = model.predict(data, modelName, saveFile, cleaning)
+
+        if scores is None:
+            raise ValueError(f"Scores are {scores}")
+        
 
         return JSONResponse(
             status_code=200,
@@ -68,6 +59,12 @@ def start_prediction(
             }
         )
 
+    except ValueError as ve:
+        return JSONResponse(
+            status_code=400,
+            content={"error": f"ValueError: {str(ve)}"}
+        )
+    
     except Exception as e:
         return JSONResponse(
             status_code=500,
@@ -104,6 +101,7 @@ def get_scores(
         #Filter by projectId if provided
         if projectId is not None:
             filtered_scores = [entry for entry in scores if entry.get("projectId") == projectId]
+            
             if not filtered_scores:
                 return JSONResponse(
                     status_code=404,
@@ -127,6 +125,12 @@ def get_scores(
             {"projectId": entry["projectId"], "studentId": entry["studentId"], "Score": entry["Score"]}
             for entry in scores
         ]
+
+        if not filtered_scores:
+            return JSONResponse(
+                status_code=404,
+                content={"error": "No scores found"}
+            )
 
         #Return all scores if no projectId is provided
         return JSONResponse(
