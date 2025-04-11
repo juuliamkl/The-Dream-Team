@@ -46,7 +46,7 @@ const Select = () => {
                 !isLoggedIn?
                     <p>Please log in to use the App!</p>
                 :
-                    isMLready?
+                    isMLready || (import.meta.env.MODE === "development")?
                         <Popover placement="bottom">
                             <PopoverTrigger>
                                 <button className="drop">

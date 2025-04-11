@@ -24,6 +24,8 @@ import { sortFunc } from "./sorting";
 /* Styling */
 import "./sort.page.scss";
 import dropdownIcon from "./dropdown-icon.svg";
+import infoIcon from "./info-icon.svg";
+import scoreInfo from "./score.svg";
 
 
 const Sort = () => {
@@ -76,6 +78,22 @@ const Sort = () => {
                 <h1>{ currentProject?.name }</h1>
                 <Popover placement="bottom">
                         <PopoverTrigger>
+                            <button className="info">
+                                <img className="info-icon" src={infoIcon}/>
+                            </button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <div className="score-info">
+                                <h4>Information about the scores</h4>
+                                <div>The percentages on the applicant card are the skill score</div>
+                                <div>and the motivation score.</div>
+                                <div>The maximum of both scores is 100%</div>
+                                <img className = "score-example" src={scoreInfo}/>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+                <Popover placement="bottom">
+                        <PopoverTrigger>
                             <button className="drop">
                                 Select sort method
                                 <img className="icon" src={dropdownIcon}/>
@@ -99,14 +117,28 @@ const Sort = () => {
                                     Name descending
                                 </button>          
                                 <button className="method" onClick={() => {
-                                    throw new Error ("Score ascending not implemented")
+                                    setSortType("score");
+                                    setAscending(true);
                                 }}>
                                     Score ascending
                                 </button>
                                 <button className="method" onClick={() => {
-                                    throw new Error ("Score descending not implemented")
+                                    setSortType("score");
+                                    setAscending(false);
                                 }}>
                                     Score descending
+                                </button>
+                                <button className="method" onClick={() => {
+                                    setSortType("motivation");
+                                    setAscending(true);
+                                }}>
+                                    Motivation ascending
+                                </button>
+                                <button className="method" onClick={() => {
+                                    setSortType("motivation");
+                                    setAscending(false);
+                                }}>
+                                    Motivation descending
                                 </button>
                             </div>
                         </PopoverContent>

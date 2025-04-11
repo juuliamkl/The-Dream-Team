@@ -13,6 +13,24 @@ export const sortFunc = (
       (a: StudentWithRow, b: StudentWithRow) =>
         a.student.name.localeCompare(b.student.name) * (reverse ? -1 : 1),
     ],
+    [
+      "score",
+      (a: StudentWithRow, b: StudentWithRow) => {
+        if (a.student.score === undefined || b.student.score === undefined) {
+          return a.student.name.localeCompare(b.student.name) * (reverse ? -1 : 1);
+        }
+        return a.student.score.score - b.student.score.score;
+      }
+    ],
+    [
+      "motivation",
+      (a: StudentWithRow, b: StudentWithRow) => {
+        if (a.student.score === undefined || b.student.score === undefined) {
+          return a.student.name.localeCompare(b.student.name) * (reverse ? -1 : 1);
+        }
+        return a.student.score.motivation - b.student.score.motivation;
+      }
+    ],
   ]);
 
   return sortingFunctions.get(method)!;

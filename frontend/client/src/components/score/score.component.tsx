@@ -9,11 +9,18 @@ type ScoreProps = {
 }
 
 const Score = ({ score }: ScoreProps) => {
+    const dispScore = (import.meta.env.MODE === "development") ? Math.round(Math.random()*100) : score?.score;
+    const dispMotivation = (import.meta.env.MODE === "development") ? Math.round(Math.random()*100) : score?.motivation;
+
+    const hueMin = 25;
+    const hueMax = 95;
+
     return (
-        score !== undefined ?
+        (import.meta.env.MODE === "development") || score !== undefined ?
         <div className="score-label">
-            <span className="score">{ score.score }</span>
-            <span className="team">{ score.motivation }</span>
+            <span className="score" style={{"backgroundColor": `hsl(${(hueMax-hueMin) * dispScore! / 100 + hueMin}, 95%, 50%)`}}>{ dispScore }%
+            </span>
+            <span className="motivation" style={{"backgroundColor": `hsl(360, 0%, ${25 * dispMotivation! / 100 + 75}%)`}}>{ dispMotivation }%</span>
         </div>
         : <span>Loading Score</span>
     )
