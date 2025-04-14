@@ -35,7 +35,7 @@ const Select = () => {
             <div className="project-select">
             {
                 !isLoggedIn?
-                    <p>Please log in to use the App!</p>
+                    <p className="login-prompt">Please log in to use the App!</p>
                 :
                     <Popover placement="bottom">
                         <PopoverTrigger>

@@ -20,6 +20,11 @@
       
       max-height: fit-content;
 
+      .login-prompt {
+        margin: auto;
+        width: max-content;
+      }
+
       .drop {
           font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
           font-size: 1.25em;
