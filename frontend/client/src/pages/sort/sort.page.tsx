@@ -1,5 +1,4 @@
 /* Lib imports */
-import { Popover, PopoverContent, PopoverTrigger } from "@heroui/popover";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
@@ -11,6 +10,7 @@ import { ColumnType } from "../../types/Columns";
 
 /* Components, services & etc. */
 import SortColumn from "../../components/sort-column/sort-column.component";
+import SortDropdown from "../../components/sort-dropdown/sort-dropdown.component";
 import { updateAllStudentLabels, updateMovedStudentsLabels } from "./label-helpers";
 import { setStudentLocationTo } from "../../services/student/location.service";
 import { useProjectContext } from "../../services/project/project.provider";
@@ -19,13 +19,11 @@ import { useAuth } from "../../services/auth/auth.provider";
 import { getStudents } from "../../services/student/student.service";
 import { handleDragEnd, parseDragIDs } from "./drag-helpers";
 import { addScoreForStudents } from "./score-helpers";
-import { sortFunc } from "./sorting";
+import { createStudentSorter } from "./sorting";
 
 /* Styling */
 import "./sort.page.scss";
-import dropdownIcon from "./dropdown-icon.svg";
-import infoIcon from "./info-icon.svg";
-import scoreInfo from "./score.svg";
+import ScoreInfo from "../../components/score/score-info.component";
 
 
 const Sort = () => {
@@ -76,73 +74,8 @@ const Sort = () => {
         <div className="container">
             <div className="head">
                 <h1>{ currentProject?.name }</h1>
-                <Popover placement="bottom">
-                        <PopoverTrigger>
-                            <button className="info">
-                                <img className="info-icon" src={infoIcon}/>
-                            </button>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                            <div className="score-info">
-                                <h4>Information about the scores</h4>
-                                <div>The percentages on the applicant card are the skill score</div>
-                                <div>and the motivation score.</div>
-                                <div>The maximum of both scores is 100%</div>
-                                <img className = "score-example" src={scoreInfo}/>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
-                <Popover placement="bottom">
-                        <PopoverTrigger>
-                            <button className="drop">
-                                Select sort method
-                                <img className="icon" src={dropdownIcon}/>
-                            </button>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                            <div className="method-dropdown">
-                                <button className="method" onClick={() => setSortType("default")}>
-                                    None
-                                </button> 
-                                <button className="method" onClick={() => {
-                                    setSortType("name");
-                                    setAscending(true);
-                                }}>
-                                    Name ascending
-                                </button>
-                                <button className="method" onClick={() => {
-                                    setSortType("name");
-                                    setAscending(false);
-                                }}>
-                                    Name descending
-                                </button>          
-                                <button className="method" onClick={() => {
-                                    setSortType("score");
-                                    setAscending(true);
-                                }}>
-                                    Score ascending
-                                </button>
-                                <button className="method" onClick={() => {
-                                    setSortType("score");
-                                    setAscending(false);
-                                }}>
-                                    Score descending
-                                </button>
-                                <button className="method" onClick={() => {
-                                    setSortType("motivation");
-                                    setAscending(true);
-                                }}>
-                                    Motivation ascending
-                                </button>
-                                <button className="method" onClick={() => {
-                                    setSortType("motivation");
-                                    setAscending(false);
-                                }}>
-                                    Motivation descending
-                                </button>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
+                <ScoreInfo/>
+                <SortDropdown setSortType={setSortType} setAscending={setAscending}/>
                 <button className="build-team" onClick={handleTeamBuild}>Build team</button>
             </div>
             <div className="columns">
@@ -155,7 +88,7 @@ const Sort = () => {
                                     key={idx}
                                     id={idx}
                                     name={col}
-                                    sorter={sortFunc(sortType, !isAscending)}
+                                    sorter={createStudentSorter(sortType, !isAscending)}
                                     isDragging={isDragging}
                                     students={
                                         students

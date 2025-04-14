@@ -20,35 +20,6 @@
 
       .info {
         margin-left: auto;
-        width: fit-content;
-        border: 0cap;
-        background-color: rgba(0,0,0,0);
-        cursor: pointer;
-        &>.info-icon {
-          height: 30px;
-        }
-      }
-
-      .drop {
-          margin-left: 10px;
-          font-size: 1em;
-          width: 15%;
-          display: flex;
-          gap: 3px;
-          border: solid 1px var(--moonstone);
-          border-radius: 0.3em;
-          background-color: var(--snow);
-          cursor: pointer;
-          min-height: 1vw;
-          padding: 10px;
-          &:hover {
-              border: solid 2px var(--blue);
-          }
-          .icon {
-              margin-left: auto;
-              width: 20px;
-              height: 20px;
-          }
       }
 
       &>.build-team {
@@ -74,45 +45,4 @@
         justify-content: space-between;
         width: auto;
     }
-}
-
-.method-dropdown {
-    margin-left: auto;
-    width: 50%;
-    border: solid 1px var(--moonstone);
-    border-radius: 1em;
-    background-color: var(--snow);
-    cursor: pointer;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 1em;
-    padding-bottom: 1em;
-
-    &>.method {
-        width: 100%;
-        border: 1px solid var(--moonstone);
-        background-color: var(--snow);
-        border-radius: 0.25em;
-        cursor: pointer;
-        text-align: left;
-        padding: 5px;
-        margin: 2px;
-        font-size: 1em;
-        &:hover {
-            border: solid 2px var(--blue);
-        }
-    }
-}
-
-.score-info {
-  border: 1px solid var(--moonstone);
-  background-color: var(--snow);
-  border-radius: 0.25em;
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  font-size: 1.125em;
-  .score-example {
-    padding: 20px;
-  }
 }
