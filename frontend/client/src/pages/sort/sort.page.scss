@@ -11,80 +11,59 @@
     text-shadow: gray 1px 1px 1px;
   }
 
-  & > .head {
-    margin-left: 20px;
-    margin-right: 20px;
+  &>.head {
+      margin-left: 20px;
+      margin-right: 20px;
 
-    display: flex;
-    align-items: center;
+      display: flex;
+      align-items: center;
 
-    & > .build-team {
-      margin-left: auto;
-      padding: 1em;
-      border-radius: 0.5em;
-      border: 1px solid var(--blue);
-      background-color: var(--uranian);
-      cursor: pointer;
-      &:hover {
-        background-color: var(--dark-uranian);
-        border: 3px solid var(--blue);
+      .info {
+        margin-left: auto;
+        width: fit-content;
+        border: 0cap;
+        background-color: rgba(0,0,0,0);
+        cursor: pointer;
+        &>.info-icon {
+          height: 30px;
+        }
       }
-    }
-  }
 
-    &>.head {
-        margin-left: 20px;
-        margin-right: 20px;
-
-        display: flex;
-        align-items: center;
-
-        .info {
-          margin-left: 67%;
-          width: fit-content;
-          border: 0cap;
-          background-color: rgba(0,0,0,0);
+      .drop {
+          margin-left: 10px;
+          font-size: 1em;
+          width: 15%;
+          display: flex;
+          gap: 3px;
+          border: solid 1px var(--moonstone);
+          border-radius: 0.3em;
+          background-color: var(--snow);
           cursor: pointer;
-          &>.info-icon {
-            height: 30px;
+          min-height: 1vw;
+          padding: 10px;
+          &:hover {
+              border: solid 2px var(--blue);
           }
-        }
+          .icon {
+              margin-left: auto;
+              width: 20px;
+              height: 20px;
+          }
+      }
 
-        .drop {
-            margin-left: auto;
-            font-size: 1em;
-            width: 15%;
-            display: flex;
-            gap: 3px;
-            border: solid 1px var(--moonstone);
-            border-radius: 0.3em;
-            background-color: var(--snow);
-            cursor: pointer;
-            min-height: 1vw;
-            padding: 10px;
-            &:hover {
-                border: solid 2px var(--blue);
-            }
-            .icon {
-                margin-left: auto;
-                width: 20px;
-                height: 20px;
-            }
-        }
-
-        &>.build-team {
-            font-size: 1em;
-            margin-left: 10px;
-            padding: 1em;
-            border-radius: 0.5em;
-            border: 1px solid var(--blue);
-            background-color: var(--uranian);
-            cursor: pointer;
-            &:hover {
-                background-color: var(--dark-uranian);
-                border: 3px solid var(--blue)
-            }
-        }
+      &>.build-team {
+          font-size: 1em;
+          margin-left: 10px;
+          padding: 1em;
+          border-radius: 0.5em;
+          border: 1px solid var(--blue);
+          background-color: var(--uranian);
+          cursor: pointer;
+          &:hover {
+              background-color: var(--dark-uranian);
+              border: 3px solid var(--blue)
+          }
+      }
     }
 
     &>.columns {

@@ -18,6 +18,8 @@
       margin: auto;
       width: 40%;
       
+      max-height: fit-content;
+
       .drop {
           font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
           font-size: 1.25em;
@@ -28,7 +30,6 @@
           border-radius: 0.3em;
           background-color: var(--snow);
           cursor: pointer;
-          min-height: 3vw;
           padding: 10px;
           &:hover {
               border: solid 2px var(--blue);
